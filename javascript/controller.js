@@ -3,7 +3,6 @@ function Controller(canvas, game, drawer) {
     this.canvas = canvas;
     this.game = game;
     this.drawer = drawer;
-
     this.handleMouseDown = function(e) {
         var x = e.clientX,
             y = e.clientY,
@@ -59,7 +58,7 @@ function Controller(canvas, game, drawer) {
             me.drawer.draw();
         //}
     };
-    
+
     this.initialise = function() {
         me.game.initialise();
         me.drawer.draw();
