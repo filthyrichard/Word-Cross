@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Word Game</title>
+		<script src="javascript/word_list.js"></script>
+		<script src="javascript/game.js"></script>
+		<script src="javascript/draw.js"></script>
+		<script src="javascript/controller.js"></script>
+		<script>	
+			window.onload = function () {
+				var canvas = document.getElementById('myCanvas');
+				var wordList = new WordList();
+				var game = new Game(wordList);
+				var drawer = new Drawer(canvas, game);
+				var controller = new Controller(canvas, game, drawer);
+				controller.initialise();
+			};
+		</script>
+    </head>
+    <body>
+		<canvas id="myCanvas" width="640" height="718"></canvas>
+		<br />
+    </body>
+</html>
