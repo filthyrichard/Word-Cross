@@ -13,12 +13,14 @@ function Game(wordList) {
 			width: 20,
 			height: 20
 		};
+	this.letterScores = {A : 1, B : 3, C : 3, D : 2, E : 1, F : 4, G : 2, H : 4, I : 1, J : 8, K : 5, L : 1, M : 2, N : 1, O : 1, P : 3, Q : 10, R : 1, S : 1, T : 1, U : 1, V : 4, W : 4, X : 8, Y : 8, Z : 10};
 	this.startWord = wordList.getWord();
 	this.lettersBeingDragged = [];
 	this.currentDragPosition = {x : 0, y : 0};
 	this.wordDirection = this.wordDirections.horizontal;
 	this.nextWord = '';
 	this.wordsAdded = [];
+	this.score = 0;
 }
 
 Game.prototype.initialise = function() {
@@ -39,7 +41,8 @@ Game.prototype.initialise = function() {
 	for (i = startX, charNum = 0; i < startX + this.startWord.length; i += 1, charNum += 1) {
         this.tileMap[startY][i] = this.startWord.charAt(charNum);
 	}
-	
+
+	this.score = 0;
 	this.nextWord = this.wordList.getWord();
 };
 
@@ -135,27 +138,44 @@ Game.prototype.wordHasAlreadyBeenPlaced = function(word) {
             return true;
         }
     }
-    
+
     return false;
 };
 
 Game.prototype.placeDraggedWord = function(row, col) {
     var i = 0,
-        charNum = 0;
+        charNum = 0
+		scoreForWord = 0,
+		multiplier = 1;
 
     if (this.wordDirection === this.wordDirections.vertical) {
         for (i = row, charNum = 0; i < row + this.lettersBeingDragged.length; i += 1, charNum += 1) {
+			if (this.tileMap[i][col] !== '') {
+				multiplier += this.letterScores[this.tileMap[i][col]];
+			}
+
             this.tileMap[i][col] = this.lettersBeingDragged[charNum];
+			scoreForWord += this.letterScores[this.lettersBeingDragged[charNum]];
         }
     }
     else {
         for (i = col, charNum = 0; i < col + this.lettersBeingDragged.length; i += 1, charNum += 1) {
+			if (this.tileMap[row][i] !== '') {
+				multiplier += this.letterScores[this.tileMap[row][i]];
+			}
+
             this.tileMap[row][i] = this.lettersBeingDragged[charNum];
+			scoreForWord += this.letterScores[this.lettersBeingDragged[charNum]];
         }
     }
 
+	scoreForWord *= multiplier;
+	this.score += scoreForWord;
+
     this.wordsAdded.push(this.lettersBeingDragged.join(''));
     this.nextWord = this.wordList.getWord();
+
+	return scoreForWord;
 };
 
 /**

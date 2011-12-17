@@ -30,13 +30,14 @@ function Controller(canvas, game, drawer) {
         var col = Math.floor(e.clientX / me.game.tile.height),
             row = Math.floor(e.clientY / me.game.tile.height),
             shiftPressed = e.shiftKey === true,
-            wordDirection = (shiftPressed) ? 1 : 0;
+            wordDirection = (shiftPressed) ? 1 : 0,
+			scoreForWord = 0;
 
         me.game.setWordDirection(wordDirection);
 
         if (me.game.withinGrid(row, col) && 
             me.game.canPlaceDraggedWord(row, col)) {
-            me.game.placeDraggedWord(row, col);
+            scoreForWord = me.game.placeDraggedWord(row, col);
         }
 
         me.game.clearDragWord();

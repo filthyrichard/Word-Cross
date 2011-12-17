@@ -73,6 +73,8 @@ Drawer.prototype.draw = function() {
 		this.letterSprites.setOffset(0, this.getLetterPosition(this.game.nextWord.charAt(i)) * this.game.tile.height);
 		this.letterSprites.setPosition(tilePositionX, tilePositionY);
 		this.letterSprites.draw(this.context);
-        
     }
+	
+	// update the score
+	window.document.getElementById('score').innerHTML = this.game.score;
 };
