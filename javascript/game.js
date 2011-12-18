@@ -119,6 +119,7 @@ Game.prototype.canPlaceDraggedWord = function(row, col) {
     }
 
     potentialWords = this.getWordsCreatedAfterDraggedWordPlacement(row, col);
+	potentialWordsLength = potentialWords.length;
 
     for (i = 0; i < potentialWordsLength; i += 1) {
         if (!this.wordList.isWord(potentialWords[i])) {
