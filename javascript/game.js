@@ -280,6 +280,7 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
         
         // find the start of the word created vertically
         j = row - 1;
+		word = wordToPlace;
         while (j >= 0 && this.tileMap[j][col] !== '') {
             word = this.tileMap[j][col] + wordToPlace;
             j -= 1;
@@ -293,7 +294,7 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
         }
     
         // if the vertical word length is > 1 then add to the found words
-        if (word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
+        if (word !== wordToPlace && word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
             wordsCreated.push(word);
         }
     }
@@ -324,6 +325,7 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
 
         // find the start of the word created horizontally
         j = col - 1;
+		word = wordToPlace;
         while (j >= 0 && this.tileMap[row][j] !== '') {
             word = this.tileMap[row][j] + word;
             j -= 1;
@@ -335,9 +337,9 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
             word = word + this.tileMap[row][j];
             j += 1;
         }
-		
+
         // if the horizontal word length is > 1 then add to the found words        
-        if (word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
+        if (word !== wordToPlace && word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
             wordsCreated.push(word);
         }
     }
