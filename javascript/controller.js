@@ -8,14 +8,17 @@ function Controller(canvas, game, drawer) {
             y = e.clientY,
             shiftPressed = e.shiftKey === true,
             wordDirection = (shiftPressed) ? 1 : 0;
+			
+		if (me.game.state === me.game.states.playing) {
 
-        me.game.setDragPosition(x, y);
-        me.game.setWordDirection(wordDirection);
+	        me.game.setDragPosition(x, y);
+	        me.game.setWordDirection(wordDirection);
 
-        me.game.dragWord(me.game.nextWord);
-        me.canvas.addEventListener('mousemove', me.handleMouseMove, false);
+	        me.game.dragWord(me.game.nextWord);
+	        me.canvas.addEventListener('mousemove', me.handleMouseMove, false);
 
-        me.drawer.draw();
+	        me.drawer.draw();
+		}
     };
     this.handleMouseUp = function(e) {
         var col = Math.floor(e.clientX / me.game.tile.height),
