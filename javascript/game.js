@@ -44,6 +44,8 @@ Game.prototype.initialise = function() {
 
 	this.score = 0;
 	this.nextWord = this.wordList.getWord();
+	this.wordsAdded.push(this.startWord);
+	this.score = this.getScoreForWord(this.startWord)
 };
 
 Game.prototype.getWordAsArray = function(word) {
@@ -155,7 +157,7 @@ Game.prototype.isOver = function() {
 Game.prototype.wordHasAlreadyBeenPlaced = function(word) {
     var i = 0,
         numWords = this.wordsAdded.length;
-
+		
     for (i = 0; i < numWords; i += 1) {
         if (word === this.wordsAdded[i]) {
             return true;
@@ -165,11 +167,32 @@ Game.prototype.wordHasAlreadyBeenPlaced = function(word) {
     return false;
 };
 
+Game.prototype.getScoreForWord = function(word) {
+	var i = 0,
+		score = 0,
+		wordLength = word.length;
+		
+	for (i = 0; i < wordLength; i += 1) {
+		score += this.letterScores[word[i]];
+	}
+	
+	return score;
+}
+
 Game.prototype.placeDraggedWord = function(row, col) {
     var i = 0,
         charNum = 0
 		scoreForWord = 0,
-		multiplier = 1;
+		multiplier = 1, 
+		wordsCreated = [],
+		max = 0;
+
+	wordsCreated = this.getWordsCreatedAfterWordPlacement(this.wordBeingDragged, this.wordDirection, row, col);
+	max = wordsCreated.length;
+
+	for (i = 0; i < max; i += 1) {
+		scoreForWord += this.getScoreForWord(wordsCreated[i]);
+	}
 
     if (this.wordDirection === this.wordDirections.vertical) {
         for (i = row, charNum = 0; i < row + this.wordBeingDragged.length; i += 1, charNum += 1) {
@@ -178,7 +201,6 @@ Game.prototype.placeDraggedWord = function(row, col) {
 			}
 
             this.tileMap[i][col] = this.wordBeingDragged[charNum];
-			scoreForWord += this.letterScores[this.wordBeingDragged[charNum]];
         }
     }
     else {
@@ -188,11 +210,10 @@ Game.prototype.placeDraggedWord = function(row, col) {
 			}
 
             this.tileMap[row][i] = this.wordBeingDragged[charNum];
-			scoreForWord += this.letterScores[this.wordBeingDragged[charNum]];
         }
     }
 
-	scoreForWord *= multiplier;
+	scoreForWord = scoreForWord + (this.getScoreForWord(this.wordBeingDragged) * multiplier);
 	this.score += scoreForWord;
 
     this.wordsAdded.push(this.wordBeingDragged);
@@ -232,7 +253,7 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
             }
 
             // if the horizontal word length is > 1 then add to the found words        
-            if (word.length > 1) {
+            if (word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
                 wordsCreated.push(word);
             }
         }
@@ -252,7 +273,7 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
         }
     
         // if the vertical word length is > 1 then add to the found words
-        if (word.length > 1) {
+        if (word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
             wordsCreated.push(word);
         }
     }
@@ -276,7 +297,7 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
             }
         
             // if the vertical word length is > 1 then add to the found words
-            if (word.length > 1) {
+            if (word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
                 wordsCreated.push(word);
             }
         }
@@ -294,9 +315,9 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
             word = word + this.tileMap[row][j];
             j += 1;
         }
-    
+		
         // if the horizontal word length is > 1 then add to the found words        
-        if (word.length > 1) {
+        if (word.length > 1 && !this.wordHasAlreadyBeenPlaced(word)) {
             wordsCreated.push(word);
         }
     }
