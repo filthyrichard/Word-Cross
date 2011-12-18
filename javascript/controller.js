@@ -23,6 +23,19 @@ function Controller(canvas, game, drawer) {
             shiftPressed = e.shiftKey === true,
             wordDirection = (shiftPressed) ? 1 : 0,
 			scoreForWord = 0;
+			
+		if (me.game.state === me.game.states.splash) {
+			me.game.start();
+	        me.drawer.draw();
+			return;
+		}
+		
+		if (me.game.state === me.game.states.gameOver) {
+	        me.game.initialise();
+	        me.drawer.draw();
+			return;
+		}
+		
 
         me.game.setWordDirection(wordDirection);
 

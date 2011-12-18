@@ -13,6 +13,11 @@ function Game(wordList) {
 			width: 20,
 			height: 20
 		};
+	this.states = {
+			splash: 0,
+			playing: 1,
+			gameOver: 2
+		};
 	this.letterScores = {A : 1, B : 3, C : 3, D : 2, E : 1, F : 4, G : 2, H : 4, I : 1, J : 8, K : 5, L : 1, M : 2, N : 1, O : 1, P : 3, Q : 10, R : 1, S : 1, T : 1, U : 1, V : 4, W : 4, X : 8, Y : 8, Z : 10};
 	this.startWord = wordList.getWord();
 	this.wordBeingDragged = '';
@@ -21,6 +26,7 @@ function Game(wordList) {
 	this.nextWord = '';
 	this.wordsAdded = [];
 	this.score = 0;
+	this.state = this.states.splash;
 }
 
 Game.prototype.initialise = function() {
@@ -29,6 +35,15 @@ Game.prototype.initialise = function() {
 		startX = Math.floor(this.grid.width / 2) - Math.floor(this.startWord.length / 2),
 		startY = Math.floor(this.grid.height / 2),
 		charNum = 0;
+
+	this.state = this.states.splash;
+	this.startWord = this.wordList.getWord();
+	this.score = 0;
+	this.wordsAdded = [];
+	this.wordBeingDragged = '';
+	this.nextWord = this.wordList.getWord();
+	this.wordsAdded.push(this.startWord);
+	this.score = this.getScoreForWord(this.startWord)
 
 	for (i = 0; i < this.grid.width; i += 1) {
 		this.tileMap[i] = [];
@@ -41,18 +56,17 @@ Game.prototype.initialise = function() {
 	for (i = startX, charNum = 0; i < startX + this.startWord.length; i += 1, charNum += 1) {
         this.tileMap[startY][i] = this.startWord.charAt(charNum);
 	}
-
-	this.score = 0;
-	this.nextWord = this.wordList.getWord();
-	this.wordsAdded.push(this.startWord);
-	this.score = this.getScoreForWord(this.startWord)
 };
+
+Game.prototype.start = function() {
+	this.state = this.states.playing;
+}
 
 Game.prototype.getWordAsArray = function(word) {
     var array = [],
         i = 0,
         numLetters = word.length;
-    
+
     for (i = 0; i < numLetters; i += 1) {
         array.push(word.charAt(i));
 	}
@@ -143,9 +157,11 @@ Game.prototype.isOver = function() {
 	for (row = 0; row < numRows; row += 1) {
 		for (col = 0; col < numCols; col += 1) {
 			if (this.canPlaceWord(this.nextWord, this.wordDirections.vertical, row, col)) {
+				console.log(row + ", " + col)
 				return false;
 			}
 			if (this.canPlaceWord(this.nextWord, this.wordDirections.horizontal, row, col)) {
+				console.log(row + ", " + col)
 				return false;
 			}
 		}
@@ -218,6 +234,10 @@ Game.prototype.placeDraggedWord = function(row, col) {
 
     this.wordsAdded.push(this.wordBeingDragged);
     this.nextWord = this.wordList.getWord();
+	
+	if (this.isOver()) {
+		this.state = this.states.gameOver;
+	}
 
 	return scoreForWord;
 };
