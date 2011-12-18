@@ -27,7 +27,7 @@ function Controller(canvas, game, drawer) {
         me.game.setWordDirection(wordDirection);
 
         if (me.game.withinGrid(row, col) && 
-            me.game.canPlaceDraggedWord(row, col)) {
+            me.game.canPlaceWord(me.game.wordBeingDragged, row, col)) {
             scoreForWord = me.game.placeDraggedWord(row, col);
         }
 

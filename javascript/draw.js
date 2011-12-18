@@ -22,7 +22,7 @@ Drawer.prototype.draw = function() {
 		height = this.game.grid.height,
 		width = this.game.grid.width,
 		letter = new Image(),
-		draggedWordLength = this.game.lettersBeingDragged.length,
+		draggedWordLength = this.game.wordBeingDragged.length,
 		nextWordLength = this.game.nextWord.length,
 		i = 0;
 
@@ -60,7 +60,7 @@ Drawer.prototype.draw = function() {
                 tilePositionY = this.game.currentDragPosition.y - (this.game.tile.height / 2);
             }
             
-			this.letterSprites.setOffset(0, this.getLetterPosition(this.game.lettersBeingDragged[i]) * this.game.tile.height);
+			this.letterSprites.setOffset(0, this.getLetterPosition(this.game.wordBeingDragged[i]) * this.game.tile.height);
 			this.letterSprites.setPosition(tilePositionX, tilePositionY);
 			this.letterSprites.draw(this.context);
         }
