@@ -88,7 +88,7 @@ Game.prototype.setDragPosition = function(x, y) {
     this.currentDragPosition.y = y;
 };
 
-Game.prototype.canPlaceWord = function(word, row, col) {
+Game.prototype.canPlaceWord = function(word, direction, row, col) {
     var i = 0,
         charNum = 0,
         okToPlace = false,
@@ -96,10 +96,11 @@ Game.prototype.canPlaceWord = function(word, row, col) {
         potentialWordsLength = 0;
 
     // make sure all the tiles are blank or the same letter as the one being placed
-    if (this.wordDirection === this.wordDirections.vertical) {
+    if (direction === this.wordDirections.vertical) {
         for (i = row, charNum = 0; i < row + word.length; i += 1, charNum += 1) {
-            okToPlace = (this.tileMap[i][col] === '' || 
-                        (this.tileMap[i][col] !== '' && this.tileMap[i][col] === word[charNum]));
+            okToPlace = (i < this.grid.height &&
+						(this.tileMap[i][col] === '' || 
+                        (this.tileMap[i][col] !== '' && this.tileMap[i][col] === word[charNum])));
             if (!okToPlace) {
                 return false;
             }
@@ -107,15 +108,16 @@ Game.prototype.canPlaceWord = function(word, row, col) {
     }
     else {
         for (i = col, charNum = 0; i < col + word.length; i += 1, charNum += 1) {
-            okToPlace = (this.tileMap[row][i] === '' || 
-                        (this.tileMap[row][i] !== '' && this.tileMap[row][i] === word[charNum]));
+            okToPlace = (i < this.grid.width && 
+						(this.tileMap[row][i] === '' || 
+                        (this.tileMap[row][i] !== '' && this.tileMap[row][i] === word[charNum])));
             if (!okToPlace) {
                 return false;
             }
         }
     }
 
-    potentialWords = this.getWordsCreatedAfterWordPlacement(word, row, col);
+    potentialWords = this.getWordsCreatedAfterWordPlacement(word, direction, row, col);
 	potentialWordsLength = potentialWords.length;
 
     for (i = 0; i < potentialWordsLength; i += 1) {
@@ -126,6 +128,29 @@ Game.prototype.canPlaceWord = function(word, row, col) {
 
     return true;
 };
+
+/* check for game over by attempting to place the next word everywhere on the board.
+*  If it can be placed then it's not game over
+*/
+Game.prototype.isOver = function() {
+	var row = 0,
+		col = 0,
+		numRows = this.grid.height,
+		numCols = this.grid.width;
+		
+	for (row = 0; row < numRows; row += 1) {
+		for (col = 0; col < numCols; col += 1) {
+			if (this.canPlaceWord(this.nextWord, this.wordDirections.vertical, row, col)) {
+				return false;
+			}
+			if (this.canPlaceWord(this.nextWord, this.wordDirections.horizontal, row, col)) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
 
 Game.prototype.wordHasAlreadyBeenPlaced = function(word) {
     var i = 0,
@@ -180,14 +205,14 @@ Game.prototype.placeDraggedWord = function(row, col) {
 * Get the words that are created after the dragged word has been placed
 * in a particular position
 */
-Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, row, col) {
+Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, direction, row, col) {
     var wordsCreated = [],
         i = 0,
         j = 0,
         charNum = 0,
         word = '';
 
-    if (this.wordDirection === this.wordDirections.vertical) {
+    if (direction === this.wordDirections.vertical) {
         // loop through each letter of the word
         for (i = row, charNum = 0; i < row + wordToPlace.length; i += 1, charNum += 1) {
 
