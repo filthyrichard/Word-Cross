@@ -157,7 +157,6 @@ Game.prototype.isOver = function() {
 	for (row = 0; row < numRows; row += 1) {
 		for (col = 0; col < numCols; col += 1) {
 			if (this.canPlaceWord(this.nextWord, this.wordDirections.vertical, row, col)) {
-				console.log(row + ", " + col)
 				return false;
 			}
 			if (this.canPlaceWord(this.nextWord, this.wordDirections.horizontal, row, col)) {
