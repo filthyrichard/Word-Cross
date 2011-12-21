@@ -160,7 +160,6 @@ Game.prototype.isOver = function() {
 				return false;
 			}
 			if (this.canPlaceWord(this.nextWord, this.wordDirections.horizontal, row, col)) {
-				console.log(row + ", " + col)
 				return false;
 			}
 		}
