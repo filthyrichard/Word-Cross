@@ -22,7 +22,7 @@ Library.getHTTPRequest = function() {
 	}
 	
 	return xmlhttp;
-}
+};
 
 Library.sendRequest = function(url, callback, postData) {
 	var req = Library.getHTTPRequest(),
@@ -52,4 +52,4 @@ Library.sendRequest = function(url, callback, postData) {
 	}
 
 	req.send(postData);
-}
+};
