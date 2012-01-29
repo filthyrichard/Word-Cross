@@ -12,19 +12,19 @@ function WordList(wordListURL, callbackWhenLoaded) {
 }
 
 WordList.prototype.getWord = function() {
-    var rand = Math.floor(Math.random() * this.words.length);
-    return this.words[rand];
+	var rand = Math.floor(Math.random() * this.words.length);
+	return this.words[rand];
 };
 
 WordList.prototype.isWord = function(word) {
-    var numWords = this.words.length,
-        i = 0;
+	var numWords = this.words.length,
+		i = 0;
 
-    for (i = 0; i < numWords; i += 1) {
-        if (this.words[i] === word) {
-            return true;
-        }
-    }
+	for (i = 0; i < numWords; i += 1) {
+		if (this.words[i] === word) {
+			return true;
+		}
+	}
 
-    return false;
+	return false;
 };
