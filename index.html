@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Word Game</title>
+		<link rel="stylesheet" type="text/css" href="css/word_game.css" />
 		<script src="javascript/library.js"></script>
 		<script src="javascript/resource_loader.js"></script>
 		<script src="javascript/sprite.js"></script>
@@ -24,15 +25,16 @@
 					wordList = new WordList(wordListURL, wordListLoaded);
 			};
 		</script>
-    </head>
-    <body>
+	</head>
+	<body>
 		<canvas id="myCanvas" width="640" height="718"></canvas>
 		<div>Score: <span id="score">0</span></div>
 		<div><a id="help">Help</a></div>
+		<div><a id="dump">Dump</a></div>
 		<div>
 			<div>High scores</div>
 			<div id="highScores"></div>
 		</div>
 		<br />
-    </body>
+	</body>
 </html>
