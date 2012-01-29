@@ -45,7 +45,9 @@ Library.sendRequest = function(url, callback, postData) {
 		if (req.status != 200 && req.status != 304 && req.status != 0) {
 			return;
 		}
-		callback(req);
+		if (callback) {
+			callback(req);
+		}
 	}
 	if (req.readyState == 4) {
 		return;
