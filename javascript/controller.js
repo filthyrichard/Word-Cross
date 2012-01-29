@@ -50,6 +50,7 @@ function Controller(canvas, game, drawer) {
 			if (me.game.state === me.game.states.gameOver) {
 				// send score and update high score
 				HighScore.save(me.game.getState());
+				HighScore.getTop(10, displayHighScores);
 			}
 		}
 
@@ -75,6 +76,19 @@ function Controller(canvas, game, drawer) {
 		var location = me.game.getFirstLocationNextWordCanBePlaced();
 		console.log(location);
 	};
+
+	this.dumpBoard = function(e) {
+		var output = '[';
+		for (i = 0; i < me.game.grid.width; i += 1) {
+			output += '[';
+			for (j = 0; j < me.game.grid.height; j += 1) {
+				output += "'" + me.game.tileMap[i][j] + "', ";
+			}
+			output += '],';
+		}	
+		output += ']';
+		console.log(output);
+	}
 	
 	this.initialise = function() {
 		var resourceLoader = new ResourceLoader(undefined, function () {
@@ -84,6 +98,7 @@ function Controller(canvas, game, drawer) {
 			me.canvas.addEventListener('mousedown', me.handleMouseDown, false);
 			me.canvas.addEventListener('mouseup', me.handleMouseUp, false);
 			document.getElementById('help').addEventListener('mouseup', me.getHelp, false);
+			document.getElementById('dump').addEventListener('mouseup', me.dumpBoard, false);
 		});
 		
 		resourceLoader.addResource('images/splash.png', 'png', ResourceType.IMAGE);
@@ -94,6 +109,27 @@ function Controller(canvas, game, drawer) {
 	};
 
 	displayHighScores = function(data) {
-		var scores = JSON.parse(data.responseText);
+		var scores = JSON.parse(data.responseText),
+			numScores = scores.length,
+			i = 0,
+			ol,
+			li,
+			highScoresElement;
+
+		// create a list for the score
+		ol = document.createElement("ol");
+		for (i = 0; i < numScores; i += 1) {
+			li = document.createElement("li");
+			li.innerHTML = scores[i].user + " (" + scores[i].score + ")";
+			ol.appendChild(li);
+		}
+
+		// remove the currently displayed high scores
+		highScoresElement = document.getElementById("highScores");
+		while (highScoresElement.childNodes.length > 0) {
+			highScoresElement.removeChild(highScoresElement.firstChild);
+		}
+
+		document.getElementById("highScores").appendChild(ol);
 	};
 }
