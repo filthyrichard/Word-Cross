@@ -49,8 +49,7 @@ function Controller(canvas, game, drawer) {
 
 			if (me.game.state === me.game.states.gameOver) {
 				// send score and update high score
-				HighScore.save(me.game.getState());
-				HighScore.getTop(10, displayHighScores);
+				HighScore.save(me.game.getState(), refreshHighScores);
 			}
 		}
 
@@ -105,8 +104,12 @@ function Controller(canvas, game, drawer) {
 		resourceLoader.addResource('letters/letters.png', 'png', ResourceType.IMAGE);
 		resourceLoader.startPreloading();
 
-		HighScore.getTop(10, displayHighScores);
+		refreshHighScores();
 	};
+
+	refreshHighScores = function() {
+		HighScore.getTop(10, displayHighScores);
+	}
 
 	displayHighScores = function(data) {
 		var scores = JSON.parse(data.responseText),
