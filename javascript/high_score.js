@@ -1,14 +1,14 @@
 function HighScore() {
 }
 
-HighScore.save = function(state) {
+HighScore.save = function(state, callback) {
 	var url = "/submitGame?";
 	url += "score=" + state.score;
 	url += "&board=" + state.board;
 	url += "&width=" + state.width;
 	url += "&height=" + state.height;
 
-	Library.sendRequest(url);
+	Library.sendRequest(url, callback);
 }
 
 HighScore.getTop = function(number, callback) {
