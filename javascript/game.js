@@ -52,6 +52,9 @@ Game.prototype.initialise = function() {
 		}
 	}
 
+	//this.nextWord = "DETESTS";
+	//this.tileMap = [['B', 'L', 'U', 'I', 'N', 'G', '', '', '', '', 'R', '', 'L', 'E', 'N', 'I', 'E', 'N', 'C', 'E', ],['', 'E', '', '', '', '', '', '', '', '', 'E', '', '', '', '', '', '', '', '', '', ],['', 'S', '', '', '', '', '', '', '', '', 'S', '', '', 'B', 'R', 'I', 'T', 'Z', 'K', 'A', ],['', 'I', '', '', '', '', '', 'T', 'E', 'N', 'T', 'I', 'E', '', '', '', '', '', '', '', ],['', 'O', '', '', '', '', '', '', '', '', 'A', '', '', '', '', '', '', 'F', '', '', ],['', 'N', '', '', 'R', '', '', '', '', '', 'T', 'R', 'A', 'G', 'I', 'C', '', 'U', '', 'H', ],['', 'S', '', '', 'O', '', '', '', '', '', 'E', '', '', '', '', '', '', 'R', '', 'Y', ],['', '', 'S', '', 'B', 'A', 'C', 'K', 'M', 'O', 'S', 'T', '', '', '', '', '', 'R', '', 'D', ],['', '', 'L', '', 'B', '', '', '', '', '', '', '', '', '', 'P', '', '', 'O', '', 'R', ],['', '', 'I', '', 'I', '', '', '', 'E', '', '', '', '', '', 'O', '', '', 'W', '', 'I', ],['', '', 'M', '', 'E', '', '', 'E', 'N', 'S', 'H', 'R', 'O', 'U', 'D', '', '', '', '', 'D', ],['', '', 'M', '', '', '', '', '', 'C', '', '', '', '', '', '', '', '', 'A', '', 'E', ],['A', '', 'E', '', '', '', '', 'P', 'L', 'U', 'M', 'M', 'I', 'E', 'R', '', '', 'H', '', '', ],['I', '', 'D', 'R', 'E', 'G', 'S', '', 'A', '', '', '', '', '', 'E', '', '', 'O', '', 'L', ],['R', '', '', '', '', '', '', '', 'V', '', '', '', '', '', 'U', '', '', 'L', '', 'O', ],['P', '', '', '', '', 'V', 'A', 'S', 'E', '', '', '', '', '', 'N', '', '', 'D', '', 'O', ],['O', '', '', '', '', '', '', '', '', 'H', 'U', 'R', 'T', 'L', 'I', 'N', 'G', '', '', 'S', ],['R', 'A', 'M', 'P', 'A', 'R', 'T', 'S', '', '', '', '', '', '', 'F', '', '', '', '', 'E', ],['T', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Y', '', '', '', '', 'L', ],['S', '', '', '', '', '', '', 'U', 'N', 'L', 'E', 'A', 'S', 'H', '', '', '', '', '', 'Y', ],]
+
 	// place the first word
 	for (i = startX, charNum = 0; i < startX + this.startWord.length; i += 1, charNum += 1) {
         this.tileMap[startY][i] = this.startWord.charAt(charNum);
@@ -298,13 +301,13 @@ Game.prototype.getWordsCreatedAfterWordPlacement = function(wordToPlace, directi
         j = row - 1;
 		word = wordToPlace;
         while (j >= 0 && this.tileMap[j][col] !== '') {
-            word = this.tileMap[j][col] + wordToPlace;
+            word = this.tileMap[j][col] + word;
             j -= 1;
         }
     
         // find the end of the word created vertically
-        j = row + this.wordBeingDragged.length;
-        while (j < this.grid.width && this.tileMap[j][col] !== '') {
+        j = row + wordToPlace.length;
+        while (j < this.grid.height && this.tileMap[j][col] !== '') {
             word = word + this.tileMap[j][col];
             j += 1;
         }
