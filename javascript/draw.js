@@ -85,7 +85,24 @@ Drawer.prototype.draw = function() {
 				this.letterSprites.setPosition(tilePositionX, tilePositionY);
 				this.letterSprites.draw(this.context);
 			}
-	
+
+			// draw the help
+			if (this.game.useHelp === true) {
+				tilePositionX = this.game.help.col * this.game.tile.width;
+				tilePositionY = this.game.help.row * this.game.tile.height;
+				if (this.game.help.direction === this.game.wordDirections.horizontal) {
+					rectWidth = (nextWordLength) * this.game.tile.width;
+					rectHeight = this.game.tile.height; 
+				}
+				else {
+					rectHeight = (nextWordLength) * this.game.tile.height;
+					rectWidth = this.game.tile.width; 
+				}
+				this.context.strokeStyle = 'red';
+				this.context.strokeRect(tilePositionX, tilePositionY, rectWidth, rectHeight);
+			}
+
+
 			// update the score
 			window.document.getElementById('score').innerHTML = this.game.score;
 		

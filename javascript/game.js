@@ -18,6 +18,12 @@ function Game(wordList) {
 			playing: 1,
 			gameOver: 2
 		};
+	this.useHelp = false;
+	this.help = {
+			row : -1,
+			col : -1,
+			direction : -1
+		};
 	this.letterScores = {A : 1, B : 3, C : 3, D : 2, E : 1, F : 4, G : 2, H : 4, I : 1, J : 8, K : 5, L : 1, M : 2, N : 1, O : 1, P : 3, Q : 10, R : 1, S : 1, T : 1, U : 1, V : 4, W : 4, X : 8, Y : 8, Z : 10};
 	this.startWord = wordList.getWord();
 	this.wordBeingDragged = '';
@@ -52,8 +58,9 @@ Game.prototype.initialise = function() {
 		}
 	}
 
-	//this.nextWord = "DETESTS";
-	//this.tileMap = [['B', 'L', 'U', 'I', 'N', 'G', '', '', '', '', 'R', '', 'L', 'E', 'N', 'I', 'E', 'N', 'C', 'E', ],['', 'E', '', '', '', '', '', '', '', '', 'E', '', '', '', '', '', '', '', '', '', ],['', 'S', '', '', '', '', '', '', '', '', 'S', '', '', 'B', 'R', 'I', 'T', 'Z', 'K', 'A', ],['', 'I', '', '', '', '', '', 'T', 'E', 'N', 'T', 'I', 'E', '', '', '', '', '', '', '', ],['', 'O', '', '', '', '', '', '', '', '', 'A', '', '', '', '', '', '', 'F', '', '', ],['', 'N', '', '', 'R', '', '', '', '', '', 'T', 'R', 'A', 'G', 'I', 'C', '', 'U', '', 'H', ],['', 'S', '', '', 'O', '', '', '', '', '', 'E', '', '', '', '', '', '', 'R', '', 'Y', ],['', '', 'S', '', 'B', 'A', 'C', 'K', 'M', 'O', 'S', 'T', '', '', '', '', '', 'R', '', 'D', ],['', '', 'L', '', 'B', '', '', '', '', '', '', '', '', '', 'P', '', '', 'O', '', 'R', ],['', '', 'I', '', 'I', '', '', '', 'E', '', '', '', '', '', 'O', '', '', 'W', '', 'I', ],['', '', 'M', '', 'E', '', '', 'E', 'N', 'S', 'H', 'R', 'O', 'U', 'D', '', '', '', '', 'D', ],['', '', 'M', '', '', '', '', '', 'C', '', '', '', '', '', '', '', '', 'A', '', 'E', ],['A', '', 'E', '', '', '', '', 'P', 'L', 'U', 'M', 'M', 'I', 'E', 'R', '', '', 'H', '', '', ],['I', '', 'D', 'R', 'E', 'G', 'S', '', 'A', '', '', '', '', '', 'E', '', '', 'O', '', 'L', ],['R', '', '', '', '', '', '', '', 'V', '', '', '', '', '', 'U', '', '', 'L', '', 'O', ],['P', '', '', '', '', 'V', 'A', 'S', 'E', '', '', '', '', '', 'N', '', '', 'D', '', 'O', ],['O', '', '', '', '', '', '', '', '', 'H', 'U', 'R', 'T', 'L', 'I', 'N', 'G', '', '', 'S', ],['R', 'A', 'M', 'P', 'A', 'R', 'T', 'S', '', '', '', '', '', '', 'F', '', '', '', '', 'E', ],['T', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Y', '', '', '', '', 'L', ],['S', '', '', '', '', '', '', 'U', 'N', 'L', 'E', 'A', 'S', 'H', '', '', '', '', '', 'Y', ],]
+	//this.nextWord = "RAVING";
+	//this.nextWord = "ACE";
+	//this.tileMap = [['B', 'U', 'S', 'B', 'O', 'Y', 'S', '', '', '', '', '', 'V', 'A', 'S', 'C', 'U', 'L', 'U', 'M', ],['O', '', 'U', '', '', '', 'U', '', '', '', '', '', '', '', '', '', '', '', '', '', ],['G', '', 'P', '', 'L', '', 'B', '', '', '', '', '', 'V', 'A', 'R', 'A', 'C', 'T', 'O', 'R', ],['O', '', 'E', '', 'O', '', 'T', '', '', '', '', '', '', '', '', '', '', '', '', '', ],['N', '', 'R', '', 'L', '', 'I', '', 'C', 'H', 'A', 'N', 'D', 'L', 'E', 'R', '', 'L', '', 'P', ],['G', '', 'S', '', 'L', '', 'T', '', '', '', 'D', '', '', '', '', 'E', '', 'I', '', 'A', ],['', '', 'E', '', 'E', '', 'L', '', '', '', 'V', '', '', '', '', 'S', '', 'T', '', 'V', ],['', '', 'X', '', 'R', '', 'E', '', '', '', 'I', '', '', '', '', 'H', '', 'E', '', 'E', ],['A', '', '', '', '', '', '', '', 'P', '', 'S', '', '', '', '', 'A', '', 'R', '', 'S', ],['T', '', '', '', '', '', '', '', 'O', '', 'O', '', '', '', '', 'P', '', 'A', '', '', ],['T', '', '', '', '', '', 'D', 'A', 'M', 'O', 'D', 'A', 'R', 'E', '', 'E', '', 'T', '', '', ],['A', '', '', '', '', '', '', '', 'E', '', 'Y', '', '', '', '', 'S', '', 'I', '', '', ],['C', '', '', '', '', 'H', '', '', 'L', '', '', '', '', '', '', '', '', '', '', 'H', ],['H', '', 'S', '', '', 'I', '', '', 'O', 'X', 'Y', 'G', 'E', 'N', 'S', '', '', '', '', 'I', ],['', '', 'U', '', '', 'N', '', '', '', '', '', '', '', '', '', '', '', '', '', 'G', ],['', '', 'B', '', '', 'D', '', '', '', 'P', 'A', 'R', 'O', 'T', 'O', 'I', 'D', '', '', 'H', ],['', '', 'A', '', '', 'E', '', '', '', '', '', '', '', '', '', '', '', '', '', 'L', ],['', '', 'D', '', '', 'R', '', '', '', '', '', 'S', 'W', 'I', 'N', 'D', 'L', 'E', '', 'A', ],['', '', 'A', '', '', 'E', '', '', '', '', '', '', '', '', '', '', '', '', '', 'N', ],['T', 'H', 'R', 'E', 'A', 'D', 'E', 'R', '', '', '', '', 'P', 'U', 'M', 'M', 'E', 'L', 'E', 'D', ],];
 
 	// place the first word
 	for (i = startX, charNum = 0; i < startX + this.startWord.length; i += 1, charNum += 1) {
@@ -107,6 +114,11 @@ Game.prototype.setDragPosition = function(x, y) {
     this.currentDragPosition.y = y;
 };
 
+Game.prototype.enableHelp = function() {
+	this.useHelp = true;
+	this.help = this.getFirstLocationNextWordCanBePlaced();
+};
+
 Game.prototype.canPlaceWord = function(word, direction, row, col) {
     var i = 0,
         charNum = 0,
@@ -135,7 +147,7 @@ Game.prototype.canPlaceWord = function(word, direction, row, col) {
             }
         }
     }
-
+	
     potentialWords = this.getWordsCreatedAfterWordPlacement(word, direction, row, col);
 	potentialWordsLength = potentialWords.length;
 
@@ -249,10 +261,14 @@ Game.prototype.placeDraggedWord = function(row, col) {
     }
 
 	scoreForWord = scoreForWord + (this.getScoreForWord(this.wordBeingDragged) * multiplier);
-	this.score += scoreForWord;
+
+	if (this.useHelp === false) {
+		this.score += scoreForWord;
+	}
 
     this.wordsAdded.push(this.wordBeingDragged);
     this.nextWord = this.wordList.getWord();
+	this.useHelp = false;
 	
 	if (this.isOver()) {
 		this.state = this.states.gameOver;

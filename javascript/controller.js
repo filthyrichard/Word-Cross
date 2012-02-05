@@ -72,8 +72,8 @@ function Controller(canvas, game, drawer) {
 	};
 
 	this.getHelp = function(e) {
-		var location = me.game.getFirstLocationNextWordCanBePlaced();
-		console.log(location);
+		me.game.enableHelp();
+		me.drawer.draw();
 	};
 
 	this.dumpBoard = function(e) {
