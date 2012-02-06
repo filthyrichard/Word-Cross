@@ -268,6 +268,9 @@ Game.prototype.placeDraggedWord = function(row, col) {
 
     this.wordsAdded.push(this.wordBeingDragged);
     this.nextWord = this.wordList.getWord();
+	while (this.wordHasAlreadyBeenPlaced(this.nextWord)) {
+    	this.nextWord = this.wordList.getWord();
+	}
 	this.useHelp = false;
 	
 	if (this.isOver()) {
