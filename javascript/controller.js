@@ -97,7 +97,7 @@ function Controller(canvas, game, drawer) {
 			me.canvas.addEventListener('mousedown', me.handleMouseDown, false);
 			me.canvas.addEventListener('mouseup', me.handleMouseUp, false);
 			document.getElementById('help').addEventListener('mouseup', me.getHelp, false);
-			document.getElementById('dump').addEventListener('mouseup', me.dumpBoard, false);
+			//document.getElementById('dump').addEventListener('mouseup', me.dumpBoard, false);
 		});
 		
 		resourceLoader.addResource('images/splash.png', 'png', ResourceType.IMAGE);
