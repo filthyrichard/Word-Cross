@@ -1,2 +1,34 @@
-#myCanvas {float:left; }
-#highScores {float: right; }
+html                            { margin: 0; padding: 0; }
+body                            { background: #000; color: #ccc; font-family: helvetica, arial, sans-serif; margin: 0; padding: 0; }
+#container                      { height: 768px; margin: 0; padding: 0; position: relative; width: 1024px; }    
+#highscoreWrap                  { display: none; }
+#helpWrap                       { display: none; }
+
+#help                           { bottom: 20px; position: absolute; left: 20px; }
+a img                           { border: none;}
+
+
+#splashpage                     {}
+#splashpage #highscoreWrap      { display: none; }
+#splashpage #scoreWrap          { display: none; }
+#helppage                       {}
+#highscorespage                 {}
+#gamepage #container            { background: url(../images/board.png) no-repeat 0 0;}    
+#gamepage canvas                { left: 0; position: absolute; top: 0;}
+#gamepage #help                 { height: 60px; top: 30px; }
+#gamepage #highscoreWrap        { color: rgb(202,159,0); display: block; left: 20px; position: absolute; text-shadow: 0 5px 5px rgba(0,0,0,0.5); top: 195px; }
+#gamepage #highscoreWrap ol li  { margin-bottom: 5px; }
+#gamepage #scoreWrap            { bottom: 195px; color: rgb(202,159,0); display: block; font-size: 24px; left: 20px; position: absolute; text-align: center; text-shadow: 0 5px 5px rgba(0,0,0,0.5); width: 300px; }
+    
+*                               {
+                                    -webkit-touch-callout: none;
+                                    -webkit-user-select: none;
+                                    -khtml-user-select: none;
+                                    -moz-user-select: none;
+                                    -ms-user-select: none;
+                                    -o-user-select: none;
+                                    user-select: none;
+                                }    
+    
+/* #myCanvas                       {float:left; }
+#highScores                     {float: right; } */
