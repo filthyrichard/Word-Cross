@@ -23,8 +23,8 @@ function Controller(canvas, game, drawer) {
 	};
 
 	this.handleMouseUp = function(e) {
-		var col = Math.floor(e.clientX / me.game.tile.height),
-			row = Math.floor(e.clientY / me.game.tile.height),
+		var col = Math.floor((e.clientX - 360) / me.game.tile.width),
+			row = Math.floor((e.clientY - 100) / me.game.tile.height),
 			shiftPressed = e.shiftKey === true,
 			wordDirection = (shiftPressed) ? 1 : 0,
 			scoreForWord = 0;
@@ -102,6 +102,7 @@ function Controller(canvas, game, drawer) {
 		
 		resourceLoader.addResource('images/splash.png', 'png', ResourceType.IMAGE);
 		resourceLoader.addResource('letters/letters.png', 'png', ResourceType.IMAGE);
+		resourceLoader.addResource('images/board.png', 'png', ResourceType.IMAGE);
 		resourceLoader.startPreloading();
 
 		refreshHighScores();
