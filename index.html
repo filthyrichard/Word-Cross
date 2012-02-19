@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<title>Word Game</title>
 		<link rel="stylesheet" type="text/css" href="css/word_game.css" />
+		<script src="javascript/main.js"></script>
 		<script src="javascript/library.js"></script>
 		<script src="javascript/resource_loader.js"></script>
 		<script src="javascript/sprite.js"></script>
@@ -12,30 +13,24 @@
 		<script src="javascript/draw.js"></script>
 		<script src="javascript/high_score.js"></script>
 		<script src="javascript/controller.js"></script>
-		<script>	
-			window.onload = function () {
-				var wordListURL = '/word_list_nine_characters_or_less.txt',
-					wordListLoaded = function () {
-						var canvas = document.getElementById('myCanvas'),
-							game = new Game(wordList),
-							drawer = new Drawer(canvas, game),
-							controller = new Controller(canvas, game, drawer);
-							controller.initialise();
-					},
-					wordList = new WordList(wordListURL, wordListLoaded);
-			};
-		</script>
 	</head>
-	<body>
-		<canvas id="myCanvas" width="640" height="718"></canvas>
-		<div>Score: <span id="score">0</span></div>
-		<div>{{ user_message }}</div>
-		<div><a id="help">Help</a></div>
-		<div><a id="dump">Dump</a></div>
-		<div>
-			<div>High scores</div>
-			<div id="highScores"></div>
+	<body id="gamepage">
+		<div id="container">
+			<canvas id="myCanvas" width="1024" height="768"></canvas>
+			<!--<canvas id="myCanvas" width="1024" height="768"></canvas>-->
+			<div id="scoreWrap"><span id="score">0</span></div>
+			<div>{{ user_message }}</div>
+			<a id="help"><img src="images/help.png" alt="help"/></a>
+			<a id="dump">Dump</a>
+			<div id="highscoreWrap">
+				<div id="highScores"></div>
+			</div>
+			<div id="helpWrap">
+				<p>How to play</p>
+				<p>Place words on the grid and score the amount of the placed word.</p>
+				<p>The score for a word is multiplied if it crosses another word. The higher the value of the letter that is used to cross the higher the multiplier.</p>
+				<p>Use help to find the first place the next word can be placed. Nothing is scored when help is used.</p>
+			</div>
 		</div>
-		<br />
 	</body>
 </html>
