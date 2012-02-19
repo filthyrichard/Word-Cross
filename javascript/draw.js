@@ -36,11 +36,11 @@ Drawer.prototype.draw = function() {
 			this.context.drawImage(image, 0, 0);
 			break;
 		case this.game.states.gameOver:
-			document.getElementsByTagName("body")[0].id = '';
+			document.getElementsByTagName("body")[0].id = 'gameover';
 			document.getElementById("help").style.display = "none";
+			document.getElementById("score").innerHTML = "Score: " + document.getElementById("score").innerHTML;
 			image.src = "images/gameover.png";
 			this.context.drawImage(image, 0, 0);
-			this.context.fillText("Game Over. Score: " + this.game.score, 10, 10);
 			break;
 		case this.game.states.playing:
 			document.getElementsByTagName("body")[0].id = 'gamepage';

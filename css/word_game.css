@@ -2,7 +2,7 @@ html                            { margin: 0; padding: 0; }
 body                            { background: #000; color: #ccc; font-family: helvetica, arial, sans-serif; margin: 0; padding: 0; }
 #container                      { height: 768px; margin: 0; padding: 0; position: relative; width: 1024px; }    
 #highscoreWrap                  { display: none; }
-#helpWrap                       { display: none; }
+#helpWrap                       { display: block; }
 
 #help                           { bottom: 20px; position: absolute; left: 20px; }
 a img                           { border: none;}
@@ -19,6 +19,7 @@ a img                           { border: none;}
 #gamepage #highscoreWrap        { color: rgb(202,159,0); display: block; left: 20px; position: absolute; text-shadow: 0 5px 5px rgba(0,0,0,0.5); top: 195px; }
 #gamepage #highscoreWrap ol li  { margin-bottom: 5px; }
 #gamepage #scoreWrap            { bottom: 195px; color: rgb(202,159,0); display: block; font-size: 24px; left: 20px; position: absolute; text-align: center; text-shadow: 0 5px 5px rgba(0,0,0,0.5); width: 300px; }
+#gameover #scoreWrap            { bottom: 195px; color: rgb(202,159,0); display: block; font-size: 35px; left: 360px; position: absolute; text-align: center; text-shadow: 0 5px 5px rgba(0,0,0,0.5); width: 300px; }
     
 *                               {
                                     -webkit-touch-callout: none;
