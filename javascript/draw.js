@@ -17,6 +17,8 @@ Drawer.prototype.getLetterPosition = function(letter) {
 Drawer.prototype.draw = function() {
 	var row = 0,
 		col = 0,
+		xOffset = 360,
+		yOffset = 100,
 		tilePositionX = 0,
 		tilePositionY = 0,
 		height = this.game.grid.height,
@@ -24,30 +26,35 @@ Drawer.prototype.draw = function() {
 		draggedWordLength = this.game.wordBeingDragged.length,
 		nextWordLength = this.game.nextWord.length,
 		i = 0,
-		splashImage = new Image();
+		image = new Image();
 		
 	switch (this.game.state) {
 		case this.game.states.splash:
-			splashImage.src = "images/splash.png";
-			this.context.drawImage(splashImage, 0, 0);
+			document.getElementsByTagName("body")[0].id = 'splashpage';
+			image.src = "/images/splash.png";
+			this.context.drawImage(image, 0, 0);
 			break;
 		case this.game.states.gameOver:
-			splashImage.src = "images/splash.png";
-			this.context.drawImage(splashImage, 0, 0);
+			document.getElementsByTagName("body")[0].id = '';
+			image.src = "images/splash.png";
+			this.context.drawImage(image, 0, 0);
 			this.context.fillText("Game Over. Score: " + this.game.score, 10, 10);
 			break;
 		case this.game.states.playing:
-			this.context.fillStyle = '#FFFFFF';
+			document.getElementsByTagName("body")[0].id = 'gamepage';
+			this.context.fillStyle = "rgba(255, 255, 255, 1)";
 			this.context.fillRect (0, 0, this.canvas.width, this.canvas.height);
+			image.src = "images/board.png";
+			this.context.drawImage(image, 0, 0);
 
 			// draw the grid
 			for (row = 0; row < height; row += 1) {
 				for (col = 0; col < width; col += 1) {
-					tilePositionX = this.game.tile.width * col;
-					tilePositionY = this.game.tile.height * row;
+					tilePositionX = this.game.tile.width * col + xOffset;
+					tilePositionY = this.game.tile.height * row + yOffset;
 
-					this.context.strokeStyle = '#CCCCCC';
-					this.context.strokeRect(tilePositionX, tilePositionY, this.game.tile.width, this.game.tile.height);
+					//this.context.strokeStyle = '#CCCCCC';
+					//this.context.strokeRect(tilePositionX, tilePositionY, this.game.tile.width, this.game.tile.height);
 
 					if (this.game.tileMap[row] !== null && this.game.tileMap[row][col] !== null) {
 						if (this.game.tileMap[row][col] !== '') {
@@ -62,14 +69,23 @@ Drawer.prototype.draw = function() {
 			// draw the word currently being dragged
 			if (draggedWordLength > 0) {
 				for (i = 0; i < draggedWordLength; i += 1) {
+					//if (this.game.wordDirection === this.game.wordDirections.vertical) {
+					//	tilePositionX = this.game.currentDragPosition.x - (this.game.tile.width / 2) + xOffset;
+					//	tilePositionY = this.game.currentDragPosition.y - (this.game.tile.height / 2) + (i * this.game.tile.height) + yOffset;
+					//}
+					//else {
+					//	tilePositionX = this.game.currentDragPosition.x - (this.game.tile.width / 2) + (i * this.game.tile.width) + xOffset;
+					//	tilePositionY = this.game.currentDragPosition.y - (this.game.tile.height / 2) + yOffset;
+					//}
 					if (this.game.wordDirection === this.game.wordDirections.vertical) {
-						tilePositionX = this.game.currentDragPosition.x - (this.game.tile.width / 2);
+						tilePositionX = this.game.currentDragPosition.x - (this.game.tile.width / 2) + 5;
 						tilePositionY = this.game.currentDragPosition.y - (this.game.tile.height / 2) + (i * this.game.tile.height);
 					}
 					else {
-						tilePositionX = this.game.currentDragPosition.x - (this.game.tile.width / 2) + (i * this.game.tile.width);
-						tilePositionY = this.game.currentDragPosition.y - (this.game.tile.height / 2);
+						tilePositionX = this.game.currentDragPosition.x + (i * this.game.tile.width) - (this.game.tile.width / 2);
+						tilePositionY = this.game.currentDragPosition.y - (this.game.tile.height - 5);
 					}
+
 			
 					this.letterSprites.setOffset(0, this.getLetterPosition(this.game.wordBeingDragged[i]) * this.game.tile.height);
 					this.letterSprites.setPosition(tilePositionX, tilePositionY);
@@ -79,8 +95,8 @@ Drawer.prototype.draw = function() {
 	
 			// draw the next word
 			for (i = 0; i < nextWordLength; i += 1) {
-				tilePositionX = 10 + (i * this.game.tile.width);
-				tilePositionY = (height * this.game.tile.height) + this.game.tile.height;
+				tilePositionX = 30 + (i * this.game.tile.width);
+				tilePositionY = (height * this.game.tile.height) + this.game.tile.height + 15;
 				this.letterSprites.setOffset(0, this.getLetterPosition(this.game.nextWord.charAt(i)) * this.game.tile.height);
 				this.letterSprites.setPosition(tilePositionX, tilePositionY);
 				this.letterSprites.draw(this.context);
@@ -88,8 +104,8 @@ Drawer.prototype.draw = function() {
 
 			// draw the help
 			if (this.game.useHelp === true) {
-				tilePositionX = this.game.help.col * this.game.tile.width;
-				tilePositionY = this.game.help.row * this.game.tile.height;
+				tilePositionX = this.game.help.col * this.game.tile.width + xOffset;
+				tilePositionY = this.game.help.row * this.game.tile.height + yOffset;
 				if (this.game.help.direction === this.game.wordDirections.horizontal) {
 					rectWidth = (nextWordLength) * this.game.tile.width;
 					rectHeight = this.game.tile.height; 
