@@ -31,17 +31,20 @@ Drawer.prototype.draw = function() {
 	switch (this.game.state) {
 		case this.game.states.splash:
 			document.getElementsByTagName("body")[0].id = 'splashpage';
+			document.getElementById("help").style.display = "none";
 			image.src = "images/splash.png";
 			this.context.drawImage(image, 0, 0);
 			break;
 		case this.game.states.gameOver:
 			document.getElementsByTagName("body")[0].id = '';
+			document.getElementById("help").style.display = "none";
 			image.src = "images/gameover.png";
 			this.context.drawImage(image, 0, 0);
 			this.context.fillText("Game Over. Score: " + this.game.score, 10, 10);
 			break;
 		case this.game.states.playing:
 			document.getElementsByTagName("body")[0].id = 'gamepage';
+			document.getElementById("help").style.display = "";
 			this.context.fillStyle = "rgba(255, 255, 255, 1)";
 			this.context.fillRect (0, 0, this.canvas.width, this.canvas.height);
 			image.src = "images/board.png";
