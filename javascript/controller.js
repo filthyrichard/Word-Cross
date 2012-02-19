@@ -103,6 +103,7 @@ function Controller(canvas, game, drawer) {
 		resourceLoader.addResource('images/splash.png', 'png', ResourceType.IMAGE);
 		resourceLoader.addResource('letters/letters.png', 'png', ResourceType.IMAGE);
 		resourceLoader.addResource('images/board.png', 'png', ResourceType.IMAGE);
+		resourceLoader.addResource('images/gameover.png', 'png', ResourceType.IMAGE);
 		resourceLoader.startPreloading();
 
 		refreshHighScores();

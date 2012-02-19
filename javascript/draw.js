@@ -31,12 +31,12 @@ Drawer.prototype.draw = function() {
 	switch (this.game.state) {
 		case this.game.states.splash:
 			document.getElementsByTagName("body")[0].id = 'splashpage';
-			image.src = "/images/splash.png";
+			image.src = "images/splash.png";
 			this.context.drawImage(image, 0, 0);
 			break;
 		case this.game.states.gameOver:
 			document.getElementsByTagName("body")[0].id = '';
-			image.src = "images/splash.png";
+			image.src = "images/gameover.png";
 			this.context.drawImage(image, 0, 0);
 			this.context.fillText("Game Over. Score: " + this.game.score, 10, 10);
 			break;
